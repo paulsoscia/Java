@@ -2,6 +2,8 @@ import java.io.*;
 import java.lang.Thread;
 import java.util.Random;
 
+// MultiThreading Method #1 Extend the Thread Class 
+//                       #2 Implement Runnable and pass it constructor of Thread Class  
 class ExtendsThread extends Thread {
 
     public Integer ClassID;
