@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 class Processor extends Thread {
 
+	/* never cache this variable named 'running'  -> by using the keyword 'volatile' */
 	private volatile boolean running = true;
 	
 	
