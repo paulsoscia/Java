@@ -7,7 +7,7 @@ public class threadSynchronization {
 	private int count = 0 ;
 
   /* Synchronized keyword is used to prevent 'a threading behavior that depends on timing and interleaving of multiple threads/processes' */
-  /*      which can cause two or more threads attempt to update mutable shared data at the same time */
+  /*      which can cause two or more threads attempt to update mutable (in this case variable 'count' where it's value can change) shared data at the same time */
   /*      Java uses synchronized to create intrinsic lock (aka mutex/monitor lock ) */
   /*      As long as a thread owns an intrinsic lock, 
   /*         no other thread can acquire the same lock. The other thread will block when it attempts to acquire the lock. */
