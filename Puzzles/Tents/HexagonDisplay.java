@@ -27,6 +27,7 @@ public class HexagonDisplay extends JPanel {
     private static final Color BLUE    = new Color(30, 130, 255);
     private static final Color RED     = new Color(230, 40, 40);
     private static final Color ORANGE  = new Color(255, 140, 0);
+	
     private static final int iYELLOW  = 0;
     private static final int iGREEN   = 1;
     private static final int iWHITE   = 2;
@@ -69,10 +70,10 @@ private static final int[][] COLOR_ORDERS = {
     // 6 colors for the 6 sides of each hexagon
     private static final Color[] PALETTE = {
         HexColor.YELLOW,   // yellow 0
-        new Color(50, 200, 80),   // green  1
-        new Color(255, 255, 255), // white  2
-        new Color(30, 130, 255),  // blue   3
-        new Color(230, 40, 40),   // red    4
+        GREEN,             // green  1
+        HexColor.WHITE,    // white  2
+        BLUE,              // blue   3
+        HexColor.RED,      // red    4
         new Color(255, 140, 0)    // orange 5
     };
 
