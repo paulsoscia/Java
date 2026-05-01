@@ -27,6 +27,7 @@ public class HexagonDisplay extends JPanel {
     private static final Color BLUE    = new Color(30, 130, 255);
     private static final Color RED     = new Color(230, 40, 40);
     private static final Color ORANGE  = new Color(255, 140, 0);
+	
     private static final int iYELLOW  = 0;
     private static final int iGREEN   = 1;
     private static final int iWHITE   = 2;
@@ -65,27 +66,6 @@ private static final int[][] COLOR_ORDERS = {
 	{iBLUE,   iORANGE, iWHITE,  iGREEN,  iRED,    iYELLOW}, /* 5 */
     {iGREEN,  iBLUE,   iWHITE,  iRED,    iYELLOW, iORANGE}  /* 6 */
 };
-
-    // 6 colors for the 6 sides of each hexagon
-    private static final Color[] PALETTE = {
-        new Color(255, 220, 0),   // yellow 0
-        new Color(50, 200, 80),   // green  1
-        new Color(255, 255, 255), // white  2
-        new Color(30, 130, 255),  // blue   3
-        new Color(230, 40, 40),   // red    4
-        new Color(255, 140, 0)    // orange 5
-    };
-
-    // 7 different color orderings — one per hexagon
-    private static final int[][] COLOR_ORDERS3 = {
-        {0, 1, 2, 3, 4, 5},
-        {1, 3, 5, 0, 2, 4},
-        {2, 5, 1, 4, 0, 3},
-        {3, 0, 4, 1, 5, 2},
-        {4, 2, 0, 5, 3, 1},
-        {5, 4, 3, 2, 1, 0},
-        {0, 3, 1, 4, 2, 5}
-    };
 
     private static final int NUM_HEXAGONS = 7;
     private static final int HEX_RADIUS   = 75;  // circumradius
@@ -262,7 +242,7 @@ private static final int[][] COLOR_ORDERS = {
         // ---- index label in centre ----
         g2.setColor(new Color(180, 180, 200));
         g2.setFont(new Font("Monospaced", Font.BOLD, 13));
-        String label = String.valueOf(idx + 1);
+        String label = String.valueOf(idx + 0);
         FontMetrics fm = g2.getFontMetrics();
         g2.drawString(label,
                 c.x - fm.stringWidth(label) / 2,
