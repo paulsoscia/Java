@@ -69,11 +69,11 @@ private static final int[][] COLOR_ORDERS = {
 
     // 6 colors for the 6 sides of each hexagon
     private static final Color[] PALETTE = {
-        HexColor.YELLOW,   // yellow 0
+        YELLOW,   // yellow 0
         GREEN,             // green  1
-        HexColor.WHITE,    // white  2
+        WHITE,    // white  2
         BLUE,              // blue   3
-        HexColor.RED,      // red    4
+        RED,      // red    4
         new Color(255, 140, 0)    // orange 5
     };
 
