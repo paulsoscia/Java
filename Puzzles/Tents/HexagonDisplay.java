@@ -20,6 +20,17 @@ import java.awt.RenderingHints;
 */
 
 public class HexagonDisplay extends JPanel {
+                                     // Piece 0 ... 5
+                                     // Array position
+                                     // Piece 1 is in location 0
+                                     // Piece 0 is in location 1
+    //int[] myArrayLocated = new int[]{1, 0, 6, 3, 4, 5, 2};
+    int[] myArrayLocated = new int[]{0, 1, 2, 3, 4, 5, 6};
+    //int[] myArrayLocated = new int[]{0, 0, 0, 0, 0, 0, 0};
+
+     int[] myArrayRotate  = new int[]{0, 0, 0, 0, 0, 0, 0}; // % 6
+    // int[] myArrayRotate  = new int[]{1, 3, 0, 4, 3, 5, 1}; // % 6
+    //int[] myArrayRotate  = new int[]{1, 1, 4, 5, 3, 1, 5}; // % 6  4 try 3 or 5
 
     private static final Color YELLOW  = new Color(255, 220, 0);
     private static final Color GREEN   = new Color(50, 200, 80);
@@ -27,7 +38,7 @@ public class HexagonDisplay extends JPanel {
     private static final Color BLUE    = new Color(30, 130, 255);
     private static final Color RED     = new Color(230, 40, 40);
     private static final Color ORANGE  = new Color(255, 140, 0);
-	
+
     private static final int iYELLOW  = 0;
     private static final int iGREEN   = 1;
     private static final int iWHITE   = 2;
@@ -35,46 +46,24 @@ public class HexagonDisplay extends JPanel {
     private static final int iRED     = 4;
     private static final int iORANGE  = 5;
 
-    enum HexColor {
-        YELLOW(255, 220, 0),
-        GREEN(50, 200, 80),
-        WHITE(255, 255, 255),
-        BLUE(30, 130, 255),
-        RED(230, 40, 40),
-        ORANGE(255, 140, 0);
-
-        final Color awt;
-        HexColor(int r, int g, int b) { this.awt = new Color(r, g, b); }
-    }
-
-     private static final HexColor[][] COLOR_ORDERS2 = {
-        {HexColor.YELLOW, HexColor.GREEN,  HexColor.WHITE,  HexColor.BLUE,   HexColor.RED,    HexColor.ORANGE},
-        {HexColor.GREEN,  HexColor.BLUE,   HexColor.ORANGE, HexColor.YELLOW, HexColor.WHITE,  HexColor.RED   },
-        {HexColor.WHITE,  HexColor.ORANGE, HexColor.GREEN,  HexColor.RED,    HexColor.YELLOW, HexColor.BLUE  },
-        {HexColor.BLUE,   HexColor.YELLOW, HexColor.RED,    HexColor.GREEN,  HexColor.ORANGE, HexColor.WHITE },
-        {HexColor.RED,    HexColor.WHITE,  HexColor.YELLOW, HexColor.ORANGE, HexColor.BLUE,   HexColor.GREEN },
-        {HexColor.ORANGE, HexColor.RED,    HexColor.BLUE,   HexColor.WHITE,  HexColor.GREEN,  HexColor.YELLOW},
-        {HexColor.YELLOW, HexColor.BLUE,   HexColor.GREEN,  HexColor.RED,    HexColor.WHITE,  HexColor.ORANGE},
+    private static final int[][] COLOR_ORDERS = {
+        {iYELLOW, iGREEN,  iWHITE,  iBLUE,   iRED,    iORANGE}, /* 0 */
+        {iBLUE,   iYELLOW, iWHITE,  iORANGE, iRED,    iGREEN }, /* 1 */
+        {iORANGE, iWHITE,  iYELLOW, iBLUE,   iGREEN,  iRED   }, /* 2 */
+        {iBLUE,   iRED,    iORANGE, iGREEN,  iYELLOW, iWHITE }, /* 3 */
+        {iGREEN,  iYELLOW, iRED,    iORANGE, iWHITE,  iBLUE  }, /* 4 */
+        {iBLUE,   iORANGE, iWHITE,  iGREEN,  iRED,    iYELLOW}, /* 5 */
+        {iGREEN,  iBLUE,   iWHITE,  iRED,    iYELLOW, iORANGE}  /* 6 */
     };
-
-private static final int[][] COLOR_ORDERS = {
-    {iYELLOW, iGREEN,  iWHITE,  iBLUE,   iRED,    iORANGE}, /* 0 */
-	{iBLUE,   iYELLOW, iWHITE,  iORANGE, iRED,    iGREEN }, /* 1 */
-	{iORANGE, iWHITE,  iYELLOW, iBLUE,   iGREEN,  iRED   }, /* 2 */
-	{iBLUE,   iRED,    iORANGE, iGREEN,  iYELLOW, iWHITE }, /* 3 */
-	{iGREEN,  iYELLOW, iRED,    iORANGE, iWHITE,  iBLUE  }, /* 4 */
-	{iBLUE,   iORANGE, iWHITE,  iGREEN,  iRED,    iYELLOW}, /* 5 */
-    {iGREEN,  iBLUE,   iWHITE,  iRED,    iYELLOW, iORANGE}  /* 6 */
-};
 
     // 6 colors for the 6 sides of each hexagon
     private static final Color[] PALETTE = {
-        YELLOW,   // yellow 0
-        GREEN,             // green  1
-        WHITE,    // white  2
-        BLUE,              // blue   3
-        RED,      // red    4
-        new Color(255, 140, 0)    // orange 5
+        YELLOW,   				  // yellow 0
+        GREEN,    	              // green  1
+        WHITE,    				  // white  2
+        BLUE,     	              // blue   3
+        RED,      	    		  // red    4
+        ORANGE                    // orange 5
     };
 
     private static final int NUM_HEXAGONS = 7;
@@ -139,9 +128,17 @@ private static final int[][] COLOR_ORDERS = {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         computeCentres();
+        int myHexPiece;
 
-        for (int i = 0; i < NUM_HEXAGONS; i++) {
-            drawHexagon(g2, i);
+        // Mix the pieces around
+        //myArrayLocated[0] = 1 ;
+        //myArrayLocated[1] = 0 ;
+        for (int iPosition = 0; iPosition < (NUM_HEXAGONS - 0); iPosition++) {
+			myHexPiece = myArrayLocated[iPosition];
+
+            //drawHexagon(g2,  iPosition, myHex);
+            //(Graphics2D g2, int idx, int iPieceID, int iRotate)
+            drawHexagon(  g2,  iPosition,  myHexPiece,    myArrayRotate[iPosition]);
         }
 
         // Legend
@@ -199,10 +196,12 @@ private static final int[][] COLOR_ORDERS = {
         centres[6] = new Point(x3 + colGap, cy + vOff);
     }
 
-    private void drawHexagon(Graphics2D g2, int idx) {
+    private void drawHexagon(Graphics2D g2, int idx, int iPieceID, int iRotate) {
         Point c   = centres[idx];
         double rot = angles[idx];
-        int[] order = COLOR_ORDERS[idx];
+        //
+        //
+        int[] order = COLOR_ORDERS[iPieceID];
 
         // ---- filled inner hexagon ----
         Polygon inner = makeHexagon(c.x, c.y, HEX_RADIUS - SIDE_WIDTH, rot);
@@ -233,7 +232,7 @@ private static final int[][] COLOR_ORDERS = {
             int[] ys = {oy1, oy2, iy2, iy1};
             Polygon side = new Polygon(xs, ys, 4);
 
-            Color base = PALETTE[order[k]];
+            Color base = PALETTE[(order[k]+iRotate)%6];
             g2.setColor(base);
             g2.fillPolygon(side);
 
@@ -252,11 +251,15 @@ private static final int[][] COLOR_ORDERS = {
         // ---- index label in centre ----
         g2.setColor(new Color(180, 180, 200));
         g2.setFont(new Font("Monospaced", Font.BOLD, 13));
-        String label = String.valueOf(idx + 1);
+        String label = String.valueOf("Piece " + iPieceID + "(" + (char) ((int) 'a' + iPieceID) + ")");
         FontMetrics fm = g2.getFontMetrics();
         g2.drawString(label,
                 c.x - fm.stringWidth(label) / 2,
                 c.y + fm.getAscent() / 2 - 2);
+        label = String.valueOf("Position " + idx );
+        g2.drawString(label,
+		        c.x - fm.stringWidth(label) / 2,
+                c.y + 4 * (fm.getAscent() / 2 - 2));
     }
 
     private void drawLegend(Graphics2D g2) {
@@ -279,20 +282,25 @@ private static final int[][] COLOR_ORDERS = {
         // instructions
         g2.setColor(new Color(120, 120, 150));
         g2.setFont(new Font("Monospaced", Font.ITALIC, 11));
-        g2.drawString("Left-click → rotate +60°   Right-click → rotate −60°",
+        g2.drawString("Left-click → rotate +60°   Right-click → rotate −60° ... Version 1.0.0.0 05/01/2026",
                 getWidth() / 2 - 175, getHeight() - 10);
     }
 
     // ------------------------------------------------------------------ //
 
     public static void main(String[] args) {
-		for (int i = 0; i < COLOR_ORDERS2.length; i++) {
-		            System.out.print("Hexagon " + (i + 0) + " colors: ");
-		            for (HexColor color : COLOR_ORDERS2[i]) {
-		                System.out.print(color.name() + " ");
-		            }
-		            System.out.println();
-        }
+
+		System.out.println("Piece");
+		System.out.println("  |_0___1___2___3___4___5______ <-Hexagon Side _______________________________________________________________________________");
+		System.out.println("0 | 5	1	4	0	3	2	YELLOW,GREEN,WHITE,BLUE,RED,ORANGE	{YELLOW, GREEN,  WHITE,  BLUE,   RED,    ORANGE},  0  a	YGWBRO");
+		System.out.println("1 | 0	5	4	2	3	1	BLUE,YELLOW,WHITE,ORANGE,RED,GREEN	{BLUE,   YELLOW, WHITE,  ORANGE, RED,    GREEN },  1  b	BYWORG");
+		System.out.println("2 | 2	4	5	0	1	3	ORANGE,WHITE,YELLOW,BLUE,GREEN,RED	{ORANGE, WHITE,  YELLOW, BLUE,   GREEN,  RED   },  2  c	OWYBGR");
+		System.out.println("3 | 0	3	2	1	5	4	BLUE,RED,ORANGE,GREEN,YELLOW,WHITE	{BLUE,   RED,    ORANGE, GREEN,  YELLOW, WHITE },  3  d	BROGYW");
+		System.out.println("4 | 1	5	3	2	4	0	GREEN,YELLOW,RED,ORANGE,WHITE,BLUE	{GREEN,  YELLOW, RED,    ORANGE, WHITE,  BLUE  },  4  e	GYROWB");
+		System.out.println("5 | 0	2	4	1	3	5	BLUE,ORANGE,WHITE,GREEN,RED,YELLOW	{BLUE,   ORANGE, WHITE,  GREEN,  RED,    YELLOW},  5  f	BOWGRY");
+		System.out.println("6 | 1	0	4	3	5	2	GREEN,BLUE,WHITE,RED,YELLOW,ORANGE	{GREEN,  BLUE,   WHITE,  RED,    YELLOW, ORANGE}   6  g	GBWRYO");
+
+
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Hexagon Display");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
